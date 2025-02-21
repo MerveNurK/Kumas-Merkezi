@@ -1,0 +1,191 @@
+import {
+  Image,
+  ScrollView,
+  StyleSheet,
+  Text,
+  TouchableOpacity,
+  Alert,
+  View,
+  StatusBar,
+  SafeAreaView,
+} from "react-native";
+import { useContext, useEffect, useState } from "react";
+import { ThemeContext } from "@/store/mycontext";
+
+export default function HomeScreen() {
+  const { theme, toggleTheme, addToCart } = useContext(ThemeContext);
+  const [products, setProducts] = useState([]); // Ürünleri tutacak state
+
+  // Ürünleri API'den çekme
+  useEffect(() => {
+    fetch("http://10.0.2.2:3000/products") // Emülatör için 10.0.2.2 kullanıyoruz
+      .then((response) => response.json())
+      .then((data) => setProducts(data))
+      .catch((error) => console.error("API fetch error:", error));
+  }, []);
+
+  // Sepete ekleme uyarısı fonksiyonu
+  const createTwoButtonAlert = (product) =>
+    Alert.alert("Kumaş", "Ürün sepete eklendi", [
+      {
+        text: "Cancel",
+        onPress: () => {
+          console.log("Cancel Pressed");
+        },
+        style: "cancel",
+      },
+      {
+        text: "OK",
+        onPress: () => {
+          console.log("Added to Cart");
+          addToCart(product);
+        },
+      },
+    ]);
+
+  return (
+    <SafeAreaView
+      style={{
+        flex: 1,
+        backgroundColor: theme === "dark" ? "#353636" : "#D0D0D0",
+      }}
+    >
+      <StatusBar style="auto" />
+      <View style={styles.header}>
+        <Text style={styles.title}>Kumaş Merkezi</Text>
+
+        <TouchableOpacity onPress={toggleTheme} style={styles.themeButton}>
+          <Image
+            source={require("../../assets/favicon.png")}
+            style={styles.themeIcon}
+          />
+        </TouchableOpacity>
+      </View>
+
+      <ScrollView contentContainerStyle={styles.content}>
+        {/* Ürün Listesi */}
+        {products.map((item, index) =>
+          theme === "dark" ? (
+            <View style={styles.itemDark} key={index}>
+              <Image style={styles.image} source={{ uri: item.image }} />
+              <Text style={styles.textDark}>{item.description}</Text>
+              <TouchableOpacity
+                onPress={() => createTwoButtonAlert(item)}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Sepete{"\n"}Ekle</Text>
+              </TouchableOpacity>
+            </View>
+          ) : (
+            <View style={styles.item} key={index}>
+              <Image style={styles.image} source={{ uri: item.image }} />
+              <Text style={styles.text}>{item.description}</Text>
+              <TouchableOpacity
+                onPress={() => createTwoButtonAlert(item)}
+                style={styles.button}
+              >
+                <Text style={styles.buttonText}>Sepete{"\n"}Ekle</Text>
+              </TouchableOpacity>
+            </View>
+          )
+        )}
+      </ScrollView>
+    </SafeAreaView>
+  );
+}
+
+const styles = StyleSheet.create({
+  header: {
+    flexDirection: "row", // Yatay hizalama
+    alignItems: "center", // Dikey ortalama
+    justifyContent: "space-between", // Başlığı ortaya alıp dark butonu sağa aldım.
+    padding: 20,
+    marginTop: 40,
+    backgroundColor: "#5660c3",
+    borderRadius: 15,
+    marginVertical: 10,
+  },
+  headerDark: {
+    flexDirection: "row", // Yatay hizalama
+    alignItems: "center", // Dikey ortalama
+    justifyContent: "space-between", // Başlığı ortaya alıp dark butonu sağa aldım.
+    padding: 20,
+    marginTop: 40,
+    backgroundColor: "#50c7a7",
+    borderRadius: 15,
+    marginVertical: 10,
+  },
+  title: {
+    fontSize: 24,
+    color: "white",
+    fontWeight: "bold",
+    flex: 1, // Başlığı ortalamak için
+    textAlign: "center",
+  },
+  themeButton: {
+    padding: 5,
+    marginTop: 10,
+  },
+  themeIcon: {
+    width: 24,
+    height: 24,
+  },
+  content: {
+    padding: 10,
+  },
+  item: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: "#fff",
+    borderRadius: 5,
+    shadowColor: "#000",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    fontFamily: "SpaceMono",
+  },
+  itemDark: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginBottom: 10,
+    padding: 10,
+    backgroundColor: "#353636",
+    borderRadius: 5,
+    shadowColor: "#fff",
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 5,
+    elevation: 3,
+    fontFamily: "SpaceMono",
+  },
+  image: {
+    width: 100,
+    height: 100,
+    marginRight: 10,
+    borderRadius: 5,
+  },
+  text: {
+    flex: 1,
+    fontSize: 16,
+    color: "#333",
+  },
+  textDark: {
+    flex: 1,
+    fontSize: 16,
+    color: "#fff",
+  },
+  button: {
+    backgroundColor: "#5660c3",
+    paddingVertical: 5,
+    paddingHorizontal: 10,
+    borderRadius: 5,
+  },
+  buttonText: {
+    color: "#fff",
+    fontSize: 16,
+    textAlign: "center",
+  },
+});

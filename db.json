@@ -1,0 +1,58 @@
+{
+  "products": [
+    {
+      "id": 0,
+      "name": "Denim",
+      "image": "http://localhost:3000/images/denim.png",
+      "description": "Yaygın olarak 'jean' adı verilen, indigo boyalı, diagonal dokuma kumaştır."
+    },
+    {
+      "id": 1,
+      "name": "Ribana",
+      "image": "https://example.com/ribana.png",
+      "description": "Düz ve ters ilmekle örülen esnek yapılı kumaştır."
+    },
+    {
+      "id": 2,
+      "name": "Örme Pike",
+      "image": "https://example.com/ormepike.png",
+      "description": "Genellikle %100 pamuktan yapılan ilmek ve askı hareketiyle oluşan örme kumaştır."
+    },
+    {
+      "id": 3,
+      "name": "Poplin",
+      "image": "https://example.com/poplin.png",
+      "description": "Bezayağı, arkası önü aynı pamuklu dokuma kumaştır; kırışsa da kolay ütülenir."
+    },
+    {
+      "id": 4,
+      "name": "Süprem",
+      "image": "https://example.com/suprem.png",
+      "description": "Penye, önü ve arkası farklı, rahat giyim sağlayan yuvarlak örme kumaştır."
+    },
+    {
+      "id": 5,
+      "name": "Gabardin",
+      "image": "https://example.com/gabardin.png",
+      "description": "Diagonal dokulu, genelde pamuklu, sıkı dokuma kumaştır."
+    },
+    {
+      "id": 6,
+      "name": "İnterlok",
+      "image": "https://example.com/interlok.png",
+      "description": "Ön ve arka görüntüsü aynı, sıkı örme kumaştır; genellikle çelik örgü denir."
+    },
+    {
+      "id": 7,
+      "name": "Dokuma Pike",
+      "image": "https://example.com/dokumapike.png",
+      "description": "Jakarlı kumaş, %100 pamuktan yapılır ve zor kırışır."
+    },
+    {
+      "id": 8,
+      "name": "2-3 İplik",
+      "image": "https://example.com/2-3iplik.png",
+      "description": "Genellikle 2-3 iplik örme kumaş, sweatshirt kumaşı olarak bilinir."
+    }
+  ]
+}
